@@ -79,26 +79,26 @@ class CorgiSnacks
     @box_id = box_id
   end
 
-  def bone
-    info = @snack_box.get_bone_info(@box_id)
-    tastiness = @snack_box.get_bone_tastiness(@box_id)
-    result = "Bone: #{info}: #{tastiness} "
-    tastiness > 30 ? "* #{result}" : result
-  end
+  # def bone
+  #   info = @snack_box.get_bone_info(@box_id)
+  #   tastiness = @snack_box.get_bone_tastiness(@box_id)
+  #   result = "Bone: #{info}: #{tastiness} "
+  #   tastiness > 30 ? "* #{result}" : result
+  # end
 
-  def kibble
-    info = @snack_box.get_kibble_info(@box_id)
-    tastiness = @snack_box.get_kibble_tastiness(@box_id)
-    result = "Kibble: #{info}: #{tastiness} "
-    tastiness > 30 ? "* #{result}" : result
-  end
+  # def kibble
+  #   info = @snack_box.get_kibble_info(@box_id)
+  #   tastiness = @snack_box.get_kibble_tastiness(@box_id)
+  #   result = "Kibble: #{info}: #{tastiness} "
+  #   tastiness > 30 ? "* #{result}" : result
+  # end
 
-  def treat
-    info = @snack_box.get_treat_info(@box_id)
-    tastiness = @snack_box.get_treat_tastiness(@box_id)
-    result = "Treat: #{info}: #{tastiness} "
-    tastiness > 30 ? "* #{result}" : result
-  end
+  # def treat
+  #   info = @snack_box.get_treat_info(@box_id)
+  #   tastiness = @snack_box.get_treat_tastiness(@box_id)
+  #   result = "Treat: #{info}: #{tastiness} "
+  #   tastiness > 30 ? "* #{result}" : result
+  # end
 
 end
 
@@ -109,12 +109,26 @@ class MetaCorgiSnacks
     @box_id = box_id
   end
 
-  def method_missing(name, *args)
-    # Your code goes here...
+  # def method_missing(method_name)
+  #   method_name = method_name.to_s
+  #   info = @snack_box.get_bone_info(method_name)
+  #   tastiness = @snack_box.get_bone_tastiness(method_name)
+  #   result = "Bone: #{info}: #{tastiness} "
+  #   tastiness > 30 ? "* #{result}" : result   
+  # end
+
+  def self.define_snack(method_name)
+    method_name = method_name.to_s
+    
+    define_method(method_name) do
+      info = @snack_box.get_bone_info(method_name)
+      tastiness = @snack_box.get_bone_tastiness(method_name)
+      result = "Bone: #{info}: #{tastiness} "
+      tastiness > 30 ? "* #{result}" : result     
+    end
   end
 
-
-  def self.define_snack(name)
-    # Your code goes here...
-  end
+  define_snack(:bone)
+  define_snack(:kibble)
+  define_snack(:treat)
 end
