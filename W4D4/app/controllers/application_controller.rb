@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::Base
+  # ???
   protect_from_forgery with: :exception
 
+  # ???
   # Expose current_user method to the views
   helper_method :current_user
   helper_method :logged_in?
 
+  # ??? why all these methods on application controller?
   private
   def require_no_user!
     redirect_to cats_url if current_user
@@ -28,6 +31,7 @@ class ApplicationController < ActionController::Base
     session[:session_token] = nil
   end
 
+  # ??? why redirect to new_session_url
   def require_user!
     redirect_to new_session_url if current_user.nil?
   end

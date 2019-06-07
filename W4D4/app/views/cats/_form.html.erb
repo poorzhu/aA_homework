@@ -1,8 +1,13 @@
+<!-- ??? - set action/method in form -->
+
 <% action = (cat.persisted? ? cat_url(cat) : cats_url) %>
 <% method = (cat.persisted? ? :patch : :post) %>
 
 <form action="<%= action %>" method="post">
+  <!-- account for post method -->
   <input type="hidden" name="_method" value="<%= method %>">
+  
+  <!-- helper function for auth_token -->
   <%= auth_token %>
 
   <label for="cat_name">Name</label>

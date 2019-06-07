@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
+  # ??? - requries no user to hit new/create
   before_action :require_no_user!, only: %i(create new)
 
   def create
+    # ??? - not instance variable
     user = User.find_by_credentials(
       params[:user][:username],
       params[:user][:password]

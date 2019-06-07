@@ -1,5 +1,7 @@
 class CatsController < ApplicationController
   # Allow unlogged in users to browse cats.
+
+  # ??? - requires user to create/update cat
   before_action :require_user!, only: %i(new create edit update)
 
   def index
@@ -19,9 +21,11 @@ class CatsController < ApplicationController
 
   def create
     @cat = current_user.cats.new(cat_params)
+
     if @cat.save
       redirect_to cat_url(@cat)
     else
+      # ??? - flash stuff
       flash.now[:errors] = @cat.errors.full_messages
       render :new
     end
@@ -44,8 +48,8 @@ class CatsController < ApplicationController
 
   private
 
+  # ??? permitted params = attributes you want user to edit?
   def cat_params
-    params.require(:cat)
-      .permit(:age, :birth_date, :color, :description, :name, :sex)
+    params.require(:cat).permit(:age, :birth_date, :color, :description, :name, :sex)
   end
 end
